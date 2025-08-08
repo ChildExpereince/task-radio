@@ -8,47 +8,58 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #fff;
-    }
-    .widget {
+      background: url('background.png') no-repeat center center;
+      background-size: cover;
+      height: 100vh;
       display: flex;
+      justify-content: center;
       align-items: center;
-      padding: 20px;
-      max-width: 600px;
-      border: 2px solid #ffc400;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin: auto;
     }
+
+    .player {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .play-button {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+    }
+
     .logo {
-      width: 80px;
-      height: 80px;
-      margin-right: 20px;
-    }
-    .content {
-      flex: 1;
-    }
-    .title {
-      font-size: 1.4em;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 8px;
-    }
-    .audio {
-      width: 100%;
+      width: 150px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="widget">
-    <img src="TASKRADIO-LIVE.png" class="logo" />
-    <div class="content">
-      <div class="title">TASK Radio</div>
-      <audio class="audio" controls autoplay>
-        <source src="https://s31.radiolize.com/radio/8120/radio.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
+  <div class="player">
+    <img src="TASKRADIO-LIVE.png" class="logo" alt="TASK Radio Logo" />
+    <img src="controls-play.png" id="playPauseBtn" class="play-button" alt="Play Button" />
+    <audio id="audioPlayer">
+      <source src="https://s31.radiolize.com/radio/8120/radio.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>
+
+  <script>
+    const audio = document.getElementById('audioPlayer');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+
+    let isPlaying = false;
+
+    playPauseBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        playPauseBtn.src = 'controls-play.png';
+      } else {
+        audio.play();
+        playPauseBtn.src = 'controls-pause.png';
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
 </body>
 </html>
