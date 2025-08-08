@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>TASK Radio Widget</title>
+<title>Simple TASK Radio Widget</title>
 <style>
   body {
     margin: 0; 
-    background: white; /* or your preference */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: white;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    font-family: Arial, sans-serif;
   }
   .radio-widget {
     position: relative;
@@ -25,13 +25,25 @@
   }
   .play-pause-btn {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 64px;  /* adjust size as needed */
-    height: 64px;
-    transform: translate(-50%, -50%);
+    top: 182px;
+    left: 244px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #4AE66E;
+    border: none;
+    color: white;
+    font-size: 24px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     user-select: none;
+    box-shadow: 0 0 8px #4AE66E;
+    transition: background 0.3s ease;
+  }
+  .play-pause-btn:hover {
+    background: #38c75a;
   }
   audio {
     display: none;
@@ -41,36 +53,39 @@
 <body>
 
 <div class="radio-widget">
-  <img src="./controls-play.png" alt="Play Button" id="playPauseBtn" class="play-pause-btn" />
+  <button id="playPauseBtn" class="play-pause-btn" aria-label="Play">▶️</button>
   <audio id="radioAudio" src="https://s31.radiolize.com/radio/8120/radio.mp3" preload="auto"></audio>
 </div>
 
 <script>
   const playPauseBtn = document.getElementById('playPauseBtn');
   const radioAudio = document.getElementById('radioAudio');
-
   let isPlaying = false;
 
   playPauseBtn.addEventListener('click', () => {
     if (!isPlaying) {
       radioAudio.play();
-      playPauseBtn.src = './controls-pause.png';
+      playPauseBtn.textContent = '❚❚'; // Pause symbol
+      playPauseBtn.setAttribute('aria-label', 'Pause');
       isPlaying = true;
     } else {
       radioAudio.pause();
-      playPauseBtn.src = './controls-play.png';
+      playPauseBtn.textContent = '▶️'; // Play symbol
+      playPauseBtn.setAttribute('aria-label', 'Play');
       isPlaying = false;
     }
   });
 
-  // Optional: update button if user pauses by other means
+  // Sync button state if playback paused/started outside the button click
   radioAudio.addEventListener('pause', () => {
-    playPauseBtn.src = './controls-play.png';
+    playPauseBtn.textContent = '▶️';
+    playPauseBtn.setAttribute('aria-label', 'Play');
     isPlaying = false;
   });
 
   radioAudio.addEventListener('play', () => {
-    playPauseBtn.src = './controls-pause.png';
+    playPauseBtn.textContent = '❚❚';
+    playPauseBtn.setAttribute('aria-label', 'Pause');
     isPlaying = true;
   });
 </script>
