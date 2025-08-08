@@ -1,107 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TASK Radio Player</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .player {
-      position: relative;
-      width: 350px;
-      height: 180px;
-      background: url('background.png') no-repeat center/cover;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
-      color: white;
-    }
-
-    .play-pause-btn {
-      width: 60px;
-      height: 60px;
-      cursor: pointer;
-      user-select: none;
-      flex-shrink: 0;
-    }
-
-    .info {
-      margin-left: 20px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      text-shadow: 0 0 5px rgba(0,0,0,0.7);
-    }
-
-    .status {
-      font-size: 0.9rem;
-      opacity: 0.8;
-      text-shadow: 0 0 3px rgba(0,0,0,0.6);
-    }
-
-    audio {
-      display: none;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TASK Radio Widget</title>
+<style>
+  body {
+    margin: 0; 
+    background: white; /* or your preference */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .radio-widget {
+    position: relative;
+    width: 600px;
+    height: 258px;
+    background: url('./background.png') no-repeat center center;
+    background-size: cover;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  .play-pause-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64px;  /* adjust size as needed */
+    height: 64px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    user-select: none;
+  }
+  audio {
+    display: none;
+  }
+</style>
 </head>
 <body>
-  <div class="player">
-    <img src="controls-play.png" alt="Play Button" class="play-pause-btn" id="playPauseBtn" />
-    <div class="info">
-      <div class="title">TASK Radio</div>
-      <div class="status" id="statusText">Paused</div>
-    </div>
-    <audio id="audioPlayer" src="https://s31.radiolize.com/radio/8120/radio.mp3" preload="none"></audio>
-  </div>
 
-  <script>
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const statusText = document.getElementById('statusText');
+<div class="radio-widget">
+  <img src="./controls-play.png" alt="Play Button" id="playPauseBtn" class="play-pause-btn" />
+  <audio id="radioAudio" src="https://s31.radiolize.com/radio/8120/radio.mp3" preload="auto"></audio>
+</div>
 
-    let isPlaying = false;
+<script>
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const radioAudio = document.getElementById('radioAudio');
 
-    playPauseBtn.addEventListener('click', () => {
-      if (!isPlaying) {
-        audioPlayer.play();
-      } else {
-        audioPlayer.pause();
-      }
-    });
+  let isPlaying = false;
 
-    audioPlayer.addEventListener('play', () => {
+  playPauseBtn.addEventListener('click', () => {
+    if (!isPlaying) {
+      radioAudio.play();
+      playPauseBtn.src = './controls-pause.png';
       isPlaying = true;
-      playPauseBtn.src = 'pause.png';
-      statusText.textContent = 'Playing';
-    });
-
-    audioPlayer.addEventListener('pause', () => {
+    } else {
+      radioAudio.pause();
+      playPauseBtn.src = './controls-play.png';
       isPlaying = false;
-      playPauseBtn.src = 'play.png';
-      statusText.textContent = 'Paused';
-    });
+    }
+  });
 
-    // Optional: auto-play when page loads (some browsers block this)
-    // audioPlayer.play();
-  </script>
+  // Optional: update button if user pauses by other means
+  radioAudio.addEventListener('pause', () => {
+    playPauseBtn.src = './controls-play.png';
+    isPlaying = false;
+  });
+
+  radioAudio.addEventListener('play', () => {
+    playPauseBtn.src = './controls-pause.png';
+    isPlaying = true;
+  });
+</script>
+
 </body>
 </html>
