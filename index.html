@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Simple TASK Radio Widget</title>
+<title>Standard TASK Radio Widget</title>
 <style>
   body {
     margin: 0; 
@@ -23,72 +23,23 @@
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
   }
-  .play-pause-btn {
-    position: absolute;
-    top: 182px;
-    left: 244px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #4AE66E;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    box-shadow: 0 0 8px #4AE66E;
-    transition: background 0.3s ease;
-  }
-  .play-pause-btn:hover {
-    background: #38c75a;
-  }
   audio {
-    display: none;
+    position: absolute;
+    top: 177px;    /* 5px up from 182px */
+    left: 249px;   /* 5px right from 244px */
+    width: 110px;  /* smaller width so it fits nicely */
+    height: 32px;  /* typical audio control height */
+    background: transparent;
+    border-radius: 5px;
+    outline: none;
   }
 </style>
 </head>
 <body>
 
 <div class="radio-widget">
-  <button id="playPauseBtn" class="play-pause-btn" aria-label="Play">▶️</button>
-  <audio id="radioAudio" src="https://s31.radiolize.com/radio/8120/radio.mp3" preload="auto"></audio>
+  <audio controls preload="auto" src="https://s31.radiolize.com/radio/8120/radio.mp3"></audio>
 </div>
-
-<script>
-  const playPauseBtn = document.getElementById('playPauseBtn');
-  const radioAudio = document.getElementById('radioAudio');
-  let isPlaying = false;
-
-  playPauseBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-      radioAudio.play();
-      playPauseBtn.textContent = 'Paused'; // Pause symbol
-      playPauseBtn.setAttribute('aria-label', 'Pause');
-      isPlaying = true;
-    } else {
-      radioAudio.pause();
-      playPauseBtn.textContent = 'Playing'; // Play symbol
-      playPauseBtn.setAttribute('aria-label', 'Play');
-      isPlaying = false;
-    }
-  });
-
-  // Sync button state if playback paused/started outside the button click
-  radioAudio.addEventListener('paused', () => {
-    playPauseBtn.textContent = 'Playing';
-    playPauseBtn.setAttribute('aria-label', 'Play');
-    isPlaying = false;
-  });
-
-  radioAudio.addEventListener('play', () => {
-    playPauseBtn.textContent = 'Paused';
-    playPauseBtn.setAttribute('aria-label', 'Pause');
-    isPlaying = true;
-  });
-</script>
 
 </body>
 </html>
