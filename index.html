@@ -65,26 +65,26 @@
   playPauseBtn.addEventListener('click', () => {
     if (!isPlaying) {
       radioAudio.play();
-      playPauseBtn.textContent = '❚❚'; // Pause symbol
+      playPauseBtn.textContent = 'Paused'; // Pause symbol
       playPauseBtn.setAttribute('aria-label', 'Pause');
       isPlaying = true;
     } else {
       radioAudio.pause();
-      playPauseBtn.textContent = '▶'; // Play symbol
+      playPauseBtn.textContent = 'Playing'; // Play symbol
       playPauseBtn.setAttribute('aria-label', 'Play');
       isPlaying = false;
     }
   });
 
   // Sync button state if playback paused/started outside the button click
-  radioAudio.addEventListener('pause', () => {
-    playPauseBtn.textContent = '▶️';
+  radioAudio.addEventListener('paused', () => {
+    playPauseBtn.textContent = 'Playing';
     playPauseBtn.setAttribute('aria-label', 'Play');
     isPlaying = false;
   });
 
   radioAudio.addEventListener('play', () => {
-    playPauseBtn.textContent = '❚❚';
+    playPauseBtn.textContent = 'Paused';
     playPauseBtn.setAttribute('aria-label', 'Pause');
     isPlaying = true;
   });
