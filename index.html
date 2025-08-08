@@ -2,17 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TASK Radio</title>
+  <title>🎧 TASK Radio</title>
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 2em; }
-    audio { width: 100%; max-width: 600px; }
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #fef9f0;
+      color: #333;
+      text-align: center;
+      padding: 2em;
+    }
+    .player-box {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: inline-block;
+      padding: 2em;
+      max-width: 600px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 1em;
+    }
+    audio {
+      width: 100%;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
-  <h2>🎧 TASK Radio – Live Stream</h2>
-  <audio controls autoplay>
-    <source src="https://s31.radiolize.com/radio/8120/radio.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <div class="player-box">
+    <h1>📻 TASK Radio – Live Stream</h1>
+    <audio controls autoplay>
+      <source src="https://s31.radiolize.com/radio/8120/radio.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 </body>
 </html>
