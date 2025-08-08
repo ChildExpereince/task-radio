@@ -2,64 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TASK Radio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TASK Radio Player</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('background.png') no-repeat center center;
-      background-size: cover;
-      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
 
     .player {
+      position: relative;
+      width: 350px;
+      height: 180px;
+      background: url('background.png') no-repeat center/cover;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      color: white;
+    }
+
+    .play-pause-btn {
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .info {
+      margin-left: 20px;
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      justify-content: center;
     }
 
-    .play-button {
-      width: 100px;
-      height: 100px;
-      cursor: pointer;
+    .title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
     }
 
-    .logo {
-      width: 150px;
-      margin-bottom: 20px;
+    .status {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      text-shadow: 0 0 3px rgba(0,0,0,0.6);
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="player">
-    <img src="TASKRADIO-LIVE.png" class="logo" alt="TASK Radio Logo" />
-    <img src="controls-play.png" id="playPauseBtn" class="play-button" alt="Play Button" />
-    <audio id="audioPlayer">
-      <source src="https://s31.radiolize.com/radio/8120/radio.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
+    <img src="play.png" alt="Play Button" class="play-pause-btn" id="playPauseBtn" />
+    <div class="info">
+      <div class="title">TASK Radio</div>
+      <div class="status" id="statusText">Paused</div>
+    </div>
+    <audio id="audioPlayer" src="https://s31.radiolize.com/radio/8120/radio.mp3" preload="none"></audio>
   </div>
 
   <script>
-    const audio = document.getElementById('audioPlayer');
     const playPauseBtn = document.getElementById('playPauseBtn');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const statusText = document.getElementById('statusText');
 
     let isPlaying = false;
 
     playPauseBtn.addEventListener('click', () => {
-      if (isPlaying) {
-        audio.pause();
-        playPauseBtn.src = 'controls-play.png';
+      if (!isPlaying) {
+        audioPlayer.play();
       } else {
-        audio.play();
-        playPauseBtn.src = 'controls-pause.png';
+        audioPlayer.pause();
       }
-      isPlaying = !isPlaying;
     });
+
+    audioPlayer.addEventListener('play', () => {
+      isPlaying = true;
+      playPauseBtn.src = 'pause.png';
+      statusText.textContent = 'Playing';
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+      isPlaying = false;
+      playPauseBtn.src = 'play.png';
+      statusText.textContent = 'Paused';
+    });
+
+    // Optional: auto-play when page loads (some browsers block this)
+    // audioPlayer.play();
   </script>
 </body>
 </html>
